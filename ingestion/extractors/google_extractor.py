@@ -59,10 +59,9 @@ def search_resturants(neighborhood, included_type="restaurant"):
     headers = {
         "Content-Type": "application/json",
         "X-Goog-Api-Key": API_KEY,
-        "X-Goog-FieldMask": "places.id,places.displayName,\
-        places.rating,places.userRatingCount,\
-        places.priceLevel,places.formattedAddress,\
-        places.types,places.location,places.regularOpeningHours"
+        "X-Goog-FieldMask": "places.id,places.displayName,places.rating,places.userRatingCount,places.priceLevel,places.formattedAddress,places.types,places.location,places.regularOpeningHours,places.photos,places.websiteUri"
+        
+        
 
     }
 
@@ -93,12 +92,16 @@ def extract_restaurants():
                             "rating": place.get("rating"),
                             "review_count": place.get("userRatingCount"),
                             "price_level": place.get("priceLevel"),
+                            "website": place.get("websiteUri",""),
+                            "photo_url":  place.get("photos",[{}])[0].get("name",""),
+                            "hours": json.dumps(place.get("regularOpeningHours",{})),
                             "address": place.get("formattedAddress", ""),
                             "types": json.dumps(place.get("types", [])),
                             "lat": place.get("location", {}).get("latitude"),
                             "lng": place.get("location", {}).get("longitude"),
                             "neighborhood": neighborhood,
                             "ingested_at": datetime.utcnow().isoformat()
+
                         })
             except Exception as e:
                 print(f"Error searching for resturants in {neighborhood}: {e}")
