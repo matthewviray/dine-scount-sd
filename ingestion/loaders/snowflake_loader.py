@@ -3,6 +3,7 @@ import json
 from datetime import datetime
 from dotenv import load_dotenv
 from ingestion.extractors.google_extractor import extract_restaurants
+from ingestion.loaders.cdc_handler import run_cdc
 import snowflake.connector
 
 load_dotenv()
@@ -19,7 +20,7 @@ def get_snowflake_connection():
     )
     return conn
 
-def load_restaurants(restaurants):
+def load_restaurants(restaurants): 
     conn = get_snowflake_connection()
     cursor = conn.cursor()
 
@@ -139,3 +140,7 @@ if __name__ == "__main__":
     print(f"Starting to load Photos into Snowflake")
     load_photos(restaurants)
     print("Data loading complete")
+
+    print("Starting CDC")
+    run_cdc(restaurants)
+    print("CDC complete")
