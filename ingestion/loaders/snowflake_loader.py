@@ -25,8 +25,39 @@ def load_restaurants(restaurants):
     cursor = conn.cursor()
 
     try:
+        data = []
         for restaurant in restaurants:
-            cursor.execute("""
+            row = (
+                restaurant["place_id"],
+                restaurant["name"],
+                restaurant["rating"],
+                restaurant["review_count"],
+                restaurant["price_level"],
+                restaurant["website"],
+                restaurant["photo_url"],
+                restaurant["address"],
+                restaurant["types"],
+                restaurant["hours"],
+                restaurant["lat"],
+                restaurant["lng"],
+                restaurant["neighborhood"],
+                restaurant["ingested_at"],
+                restaurant["place_id"],
+                restaurant["name"],
+                restaurant["rating"],
+                restaurant["review_count"],
+                restaurant["price_level"],
+                restaurant["website"],
+                restaurant["photo_url"],
+                restaurant["address"],
+                restaurant["types"],
+                restaurant["hours"],
+                restaurant["lat"],
+                restaurant["lng"],
+                restaurant["neighborhood"],
+                restaurant["ingested_at"])
+            data.append(row)
+        cursor.executemany("""
                 MERGE INTO DINE_SCOUT.RAW.RAW_RESTAURANTS AS target
                 USING (SELECT %s AS place_id) AS source
                 ON target.place_id = source.place_id
@@ -53,39 +84,8 @@ def load_restaurants(restaurants):
                     %s, %s, %s, %s,
                     PARSE_JSON(%s), PARSE_JSON(%s), %s, %s, %s, %s
                 )
-            """, (
-                # USING clause - matching condition
-                restaurant["place_id"],
-                # WHEN MATCHED - update values
-                restaurant["name"],
-                restaurant["rating"],
-                restaurant["review_count"],
-                restaurant["price_level"],
-                restaurant["website"],
-                restaurant["photo_url"],
-                restaurant["address"],
-                restaurant["types"],
-                restaurant["hours"],
-                restaurant["lat"],
-                restaurant["lng"],
-                restaurant["neighborhood"],
-                restaurant["ingested_at"],
-                # WHEN NOT MATCHED - insert values
-                restaurant["place_id"],
-                restaurant["name"],
-                restaurant["rating"],
-                restaurant["review_count"],
-                restaurant["price_level"],
-                restaurant["website"],
-                restaurant["photo_url"],
-                restaurant["address"],
-                restaurant["types"],
-                restaurant["hours"],
-                restaurant["lat"],
-                restaurant["lng"],
-                restaurant["neighborhood"],
-                restaurant["ingested_at"]
-            ))
+            """, data)
+                
         conn.commit()
         print(f"Successfully loaded {len(restaurants)} restaurants into snowflake")
     except Exception as e:
@@ -101,19 +101,10 @@ def load_photos(restaurants):
     cursor = conn.cursor()
 
     try:
+        data = []
         for restaurant in restaurants:
             if restaurant["photo_url"]:
-                cursor.execute("""
-                    MERGE INTO DINE_SCOUT.RAW.RAW_RESTAURANT_PHOTOS AS target
-                    USING (SELECT %s AS place_id) AS source
-                    ON target.place_id = source.place_id
-                    WHEN MATCHED THEN UPDATE SET
-                    photo_resource_name = %s,
-                    ingested_at = %s
-                    WHEN NOT MATCHED THEN INSERT (
-                    place_id, photo_resource_name, ingested_at)
-                    VALUES (%s, %s, %s)
-                """, (
+                data.append((
                     restaurant["place_id"],
                     restaurant["photo_url"],
                     restaurant["ingested_at"],
@@ -121,6 +112,17 @@ def load_photos(restaurants):
                     restaurant["photo_url"],
                     restaurant["ingested_at"]
                 ))
+        cursor.executemany("""
+            MERGE INTO DINE_SCOUT.RAW.RAW_RESTAURANT_PHOTOS AS target
+            USING (SELECT %s AS place_id) AS source
+                    ON target.place_id = source.place_id
+                    WHEN MATCHED THEN UPDATE SET
+                    photo_resource_name = %s,
+                    ingested_at = %s
+                    WHEN NOT MATCHED THEN INSERT (
+                    place_id, photo_resource_name, ingested_at)
+                    VALUES (%s, %s, %s)
+                """, data)
         conn.commit()
         print(f"Successfully loaded {len(restaurants)} restaurants photos into snowflake")
     except Exception as e:

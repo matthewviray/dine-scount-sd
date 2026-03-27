@@ -94,7 +94,7 @@ def extract_restaurants():
                             "price_level": place.get("priceLevel"),
                             "website": place.get("websiteUri",""),
                             "photo_url":  place.get("photos",[{}])[0].get("name",""),
-                            "hours": json.dumps(place.get("regularOpeningHours",{})),
+                            "hours": json.dumps(place.get("regularOpeningHours",{}).get("weekdayDescriptions", [])),
                             "address": place.get("formattedAddress", ""),
                             "types": json.dumps(place.get("types", [])),
                             "lat": place.get("location", {}).get("latitude"),
