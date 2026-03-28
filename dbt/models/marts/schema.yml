@@ -1,0 +1,26 @@
+version 2:
+
+models:
+  - name: mart_restaurant_scores
+    description: "Made our 5 different score ratings for each restaurants"
+    columns:
+      - name: place_id
+        description: "Unique identifier for each restaurants"
+      - tests:
+          - not_null
+          - unique
+      - name: rating_score
+        tests:
+          - not_null
+      - name: popularity_score
+        tests:
+          - not_null
+      - name: velocity_score
+        tests:
+          - not_null
+      - name: hidden_gem_score
+        tests:
+          - not_null
+      - name: newcomer_score
+        tests:
+          - not_null
