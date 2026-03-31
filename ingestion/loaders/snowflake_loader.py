@@ -91,6 +91,7 @@ def load_restaurants(restaurants):
     except Exception as e:
         print(f"Error loading restaurants into snowflake: {e}")
         conn.rollback()
+        raise
     finally:
         cursor.close()
         conn.close()
@@ -128,6 +129,7 @@ def load_photos(restaurants):
     except Exception as e:
         print(f"Error loading restaurants photos into snowflake: {e}")
         conn.rollback()
+        raise
     finally:
         cursor.close()
         conn.close()

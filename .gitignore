@@ -1,4 +1,6 @@
 .env
+dbt/profiles.yml
+dbt/.user.yml
 __pycahce__/
 *.pyc 
 .DS_Store
