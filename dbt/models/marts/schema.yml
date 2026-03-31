@@ -1,4 +1,4 @@
-version 2:
+version: 2
 
 models:
   - name: mart_restaurant_scores
@@ -6,7 +6,7 @@ models:
     columns:
       - name: place_id
         description: "Unique identifier for each restaurants"
-      - tests:
+        tests:
           - not_null
           - unique
       - name: rating_score

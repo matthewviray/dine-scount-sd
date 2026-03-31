@@ -20,7 +20,7 @@ default_args = {
 dag = DAG('restaurant_pipeline',
     default_args=default_args,
     description='RestaurantPulse SD — full pipeline',
-    schedule_interval='@weekly',
+    schedule='@weekly',
     start_date=datetime(2026, 1, 1),
     catchup=False,
 )
@@ -52,13 +52,13 @@ task_cdc = PythonOperator(
 
 task_dbt_run = BashOperator(
     task_id='run_dbt',
-    bash_command='cd /opt/airflow/dbt && dbt run',
+    bash_command='cd /opt/airflow/dbt && dbt run --profiles-dir /opt/airflow/dbt',
     dag=dag
 )
 
 task_dbt_test = BashOperator(
     task_id='test_dbt',
-    bash_command='cd /opt/airflow/dbt && dbt test',
+    bash_command='cd /opt/airflow/dbt && dbt test --profiles-dir /opt/airflow/dbt',
     dag=dag
 )
 

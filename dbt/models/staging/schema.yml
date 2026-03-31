@@ -38,9 +38,9 @@ models:
           tests:
             - not_null
             - accepted_values:
-                values: 
-                  - insert
-                  - update
+                values:
+                  - INSERT
+                  - UPDATE
         - name: detected_at
           tests:
             - not_null

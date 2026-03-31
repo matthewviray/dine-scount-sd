@@ -9,12 +9,15 @@ x-airflow-common:
     AIRFLOW__CORE__FERNET_KEY: ''
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    _PIP_ADDITIONAL_REQUIREMENTS: 'dbt-snowflake'
   volumes:
     - ./airflow/dags:/opt/airflow/dags
     - ./airflow/logs:/opt/airflow/logs
     - ./airflow/plugins:/opt/airflow/plugins
     - ./.env:/opt/airflow/.env
     - .:/opt/airflow/project
+    - ./dbt:/opt/airflow/dbt
+
   depends_on:
     postgres:
       condition: service_healthy
