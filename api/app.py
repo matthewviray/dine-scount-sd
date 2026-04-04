@@ -1,1 +1,0 @@
-API_URL = "https://dine-scout-sd.onrender.com"
