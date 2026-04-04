@@ -1,8 +1,12 @@
 .env
 dbt/profiles.yml
 dbt/.user.yml
-__pycahce__/
-*.pyc 
+dbt/target/
+dbt/dbt_packages/
+__pycache__/
+*.pyc
 .DS_Store
 airflow/logs/
+airflow/plugins/
 .venv/
+logs/

@@ -4,7 +4,7 @@ from typing import Optional
 import snowflake.connector
 import os
 
-load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '..', '.env'))
+load_dotenv()
 app = FastAPI()
 
 def get_snowflake_connection():
