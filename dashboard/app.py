@@ -6,11 +6,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-API_URL = "http://localhost:8000"
+API_URL = "https://dine-scout-sd.onrender.com"
 
 
 st.set_page_config(
-    page_title="RestaurantPulse SD",
+    page_title="Dine-Scout SD",
     page_icon="🍽️",
     layout="wide"
 )
@@ -130,7 +130,7 @@ def display_restaurant_card(restaurant):
 # SIDEBAR FILTERS
 
 
-st.sidebar.title("🍽️ RestaurantPulse SD")
+st.sidebar.title("🍽️ Dine-Scout SD")
 st.sidebar.markdown("Discover the best restaurants in San Diego")
 st.sidebar.divider()
 
@@ -159,7 +159,7 @@ st.sidebar.markdown("*Data updated weekly from Google Places*")
 # MAIN CONTENT
 # ─────────────────────────────────────────
 
-st.title("🍽️ RestaurantPulse SD")
+st.title("🍽️ Dine-Scout SD")
 st.markdown("San Diego's smartest restaurant recommendations — powered by real data.")
 
 with st.expander("📊 How are scores calculated?"):
