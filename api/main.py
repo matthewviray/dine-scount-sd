@@ -112,7 +112,7 @@ def get_recommendations(
         params.append(limit)
         cursor.execute(query, params)
         rows = cursor.fetchall()
-        columns = [desc[0] for desc in cursor.description]
+        columns = [desc[0].lower() for desc in cursor.description]
         results = []
         for row in rows:
             results.append(dict(zip(columns, row)))

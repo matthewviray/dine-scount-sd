@@ -74,8 +74,8 @@ scored as (
             then true else false
         end as is_hot_right_now,
 
-        case when r.rating / nullif(log(10,r.review_count + 1), 0) >= 1.8
-            then true else false
+        case when r.rating / nullif(log(10,r.review_count + 1), 0) >= 1.8 and r.review_count >= 30
+            then true else false -- high enough rating relative to review count to be a hidden gem(ex 4.5 rating with 300 reviews is ~1.8)
         end as is_hidden_gem,
 
         case when f.first_seen_at >= dateadd(day, -180, current_timestamp)
