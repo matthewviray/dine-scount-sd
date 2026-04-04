@@ -1,4 +1,4 @@
-apache-airflow==2.8.1
+
 snowflake-connector-python==3.6.0
 requests==2.31.0
 python-dotenv==1.0.0
@@ -7,7 +7,3 @@ fastapi==0.109.0
 uvicorn==0.27.0
 streamlit==1.31.0
 pandas==2.1.0
-fastapi
-uvicorn
-snowflake-connector-python
-python-dotenv
