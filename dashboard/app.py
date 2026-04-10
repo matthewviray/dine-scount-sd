@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-API_URL = "https://dine-scout-sd.onrender.com"
+API_URL = "https://dine-scout-api-489441554062.us-central1.run.app"
 
 
 st.set_page_config(
